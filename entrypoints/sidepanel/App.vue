@@ -2,7 +2,11 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { type Browser, browser } from 'wxt/browser';
 
-const PREVIEW_STORAGE_KEY = 'tabPreviewById';
+const IS_INCOGNITO_CONTEXT = browser.extension.inIncognitoContext;
+
+const PREVIEW_STORAGE_KEY = IS_INCOGNITO_CONTEXT
+  ? 'tabPreviewById:incognito'
+  : 'tabPreviewById:default';
 
 type PreviewByTabId = Record<string, string>;
 
@@ -76,7 +80,9 @@ const closeTab = async (tabId?: number) => {
 };
 
 const visibleTabs = computed(() =>
-  tabs.value.filter(tab => tab.id !== undefined),
+  tabs.value.filter(
+    tab => tab.id !== undefined && tab.incognito === IS_INCOGNITO_CONTEXT,
+  ),
 );
 
 const refreshAll = async () => {

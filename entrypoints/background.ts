@@ -1,6 +1,10 @@
 import { type Browser, browser } from 'wxt/browser';
 
-const PREVIEW_STORAGE_KEY = 'tabPreviewById';
+const IS_INCOGNITO_CONTEXT = browser.extension.inIncognitoContext;
+
+const PREVIEW_STORAGE_KEY = IS_INCOGNITO_CONTEXT
+  ? 'tabPreviewById:incognito'
+  : 'tabPreviewById:default';
 
 const FORBIDDEN_CAPTURE_PREFIXES = [
   'chrome://',
@@ -22,7 +26,8 @@ const shouldCapture = (
     tab.active !== true ||
     tab.windowId === undefined ||
     tab.id === undefined ||
-    tab.url === undefined
+    tab.url === undefined ||
+    tab.incognito !== IS_INCOGNITO_CONTEXT
   ) {
     return false;
   }

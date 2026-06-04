@@ -14,6 +14,6 @@ export default defineConfig({
     ],
     ...(browser === 'firefox'
       ? {}
-      : { side_panel: { default_path: 'sidepanel.html' } }),
+      : { incognito: 'split', side_panel: { default_path: 'sidepanel.html' } }),
   }),
 });
