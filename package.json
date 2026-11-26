@@ -26,7 +26,7 @@
     "vue": "^3.5.35"
   },
   "devDependencies": {
-    "@dword-design/base": "^16.2.6",
+    "@dword-design/base": "^17.0.0",
     "@dword-design/base-config-web-extension": "^5.1.5"
   },
   "peerDependencies": {
